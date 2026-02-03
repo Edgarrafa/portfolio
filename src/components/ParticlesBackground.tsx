@@ -1,9 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import type { Container, ISourceOptions } from '@tsparticles/engine';
+import type { ISourceOptions } from '@tsparticles/engine';
 
 interface ParticlesBackgroundProps {
   className?: string;
@@ -11,21 +11,32 @@ interface ParticlesBackgroundProps {
 
 export default function ParticlesBackground({ className }: ParticlesBackgroundProps) {
   const [init, setInit] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+    mediaQuery.addEventListener('change', handleChange);
+
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => {
       setInit(true);
     });
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  const particlesLoaded = useCallback(async (container: Container | undefined) => {
-    // Optional: Log container for debugging
-    console.log('Particles loaded:', container);
+  const particlesLoaded = useCallback(async () => {
+    // Particles initialized
   }, []);
 
-  const options: ISourceOptions = {
+  const options: ISourceOptions = useMemo(() => ({
     fullScreen: false,
     background: {
       color: {
@@ -36,24 +47,24 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
     interactivity: {
       events: {
         onClick: {
-          enable: true,
+          enable: !prefersReducedMotion,
           mode: 'push',
         },
         onHover: {
-          enable: true,
+          enable: !prefersReducedMotion,
           mode: 'grab',
         },
       },
       modes: {
         push: {
-          quantity: 4,
+          quantity: 3,
         },
         grab: {
-          distance: 140,
+          distance: 120,
           links: {
             blink: false,
             consent: false,
-            opacity: 0.8,
+            opacity: 0.6,
           },
         },
       },
@@ -66,12 +77,12 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
         color: '#00d9ff',
         distance: 150,
         enable: true,
-        opacity: 0.2,
+        opacity: 0.15,
         width: 1,
       },
       move: {
-        enable: true,
-        speed: 1,
+        enable: !prefersReducedMotion,
+        speed: prefersReducedMotion ? 0 : 0.8,
         direction: 'none',
         random: true,
         straight: false,
@@ -85,13 +96,13 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
           height: 800,
           width: 800,
         },
-        value: 80,
+        value: 60, // Reduced from 80 for better performance
       },
       opacity: {
-        value: { min: 0.3, max: 0.7 },
+        value: { min: 0.3, max: 0.6 },
         animation: {
-          enable: true,
-          speed: 1,
+          enable: !prefersReducedMotion,
+          speed: 0.8,
           sync: false,
         },
       },
@@ -109,7 +120,7 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
         options: {
           particles: {
             number: {
-              value: 40,
+              value: 35,
             },
           },
         },
@@ -119,15 +130,20 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
         options: {
           particles: {
             number: {
-              value: 25,
+              value: 20,
             },
           },
         },
       },
     ],
-  };
+  }), [prefersReducedMotion]);
 
   if (!init) return null;
+
+  // Don't render particles at all if reduced motion is strongly preferred
+  if (prefersReducedMotion) {
+    return <div className={className} aria-hidden="true" />;
+  }
 
   return (
     <Particles
@@ -135,6 +151,7 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
       className={className}
       particlesLoaded={particlesLoaded}
       options={options}
+      aria-hidden="true"
     />
   );
 }

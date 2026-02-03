@@ -51,12 +51,13 @@ export default function Hero() {
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      aria-labelledby="hero-name"
     >
       {/* Particles Background */}
       <ParticlesBackground className="absolute inset-0 z-0" />
 
       {/* Cyber Grid Background */}
-      <div className="absolute inset-0 cyber-grid z-0" />
+      <div className="absolute inset-0 cyber-grid z-0" aria-hidden="true" />
 
       {/* Content */}
       <motion.div
@@ -78,6 +79,7 @@ export default function Hero() {
           <GlitchText
             text={personalInfo.name}
             as="h1"
+            id="hero-name"
             className="text-5xl md:text-7xl lg:text-8xl font-bold font-mono text-cyber-white tracking-tighter"
           />
         </motion.div>
@@ -114,28 +116,31 @@ export default function Hero() {
         </motion.div>
 
         {/* Social Links */}
-        <motion.div
+        <motion.ul
           variants={fadeInUp}
           className="flex items-center justify-center gap-6"
+          role="list"
+          aria-label="Social links"
         >
           {personalInfo.socialLinks.map((link) => {
             const Icon = socialIcons[link.icon] || Github;
             return (
-              <motion.a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-lg border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan hover:border-glow-cyan transition-all"
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label={link.name}
-              >
-                <Icon size={24} />
-              </motion.a>
+              <li key={link.name}>
+                <motion.a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-lg border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan hover:border-glow-cyan transition-all inline-block"
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={`${link.name} (opens in new tab)`}
+                >
+                  <Icon size={24} aria-hidden="true" />
+                </motion.a>
+              </li>
             );
           })}
-        </motion.div>
+        </motion.ul>
       </motion.div>
 
       {/* Scroll Indicator */}
@@ -158,10 +163,10 @@ export default function Hero() {
       </motion.div>
 
       {/* Decorative Corner Elements */}
-      <div className="absolute top-20 left-4 w-20 h-20 border-l-2 border-t-2 border-cyber-cyan/20" />
-      <div className="absolute top-20 right-4 w-20 h-20 border-r-2 border-t-2 border-cyber-cyan/20" />
-      <div className="absolute bottom-20 left-4 w-20 h-20 border-l-2 border-b-2 border-cyber-pink/20" />
-      <div className="absolute bottom-20 right-4 w-20 h-20 border-r-2 border-b-2 border-cyber-pink/20" />
+      <div className="absolute top-20 left-4 w-20 h-20 border-l-2 border-t-2 border-cyber-cyan/20" aria-hidden="true" />
+      <div className="absolute top-20 right-4 w-20 h-20 border-r-2 border-t-2 border-cyber-cyan/20" aria-hidden="true" />
+      <div className="absolute bottom-20 left-4 w-20 h-20 border-l-2 border-b-2 border-cyber-pink/20" aria-hidden="true" />
+      <div className="absolute bottom-20 right-4 w-20 h-20 border-r-2 border-b-2 border-cyber-pink/20" aria-hidden="true" />
     </section>
   );
 }

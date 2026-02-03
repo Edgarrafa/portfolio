@@ -1,16 +1,57 @@
 'use client';
 
+import { useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from '@/lib/animations';
 import { useLanguage } from '@/lib/i18n/context';
+import { personalInfo } from '@/lib/data';
+
+// Pre-compile keywords regex for performance
+const keywords = [
+  'React',
+  'Next.js',
+  'Node.js',
+  'full-stack developer',
+  'TypeScript',
+  'JavaScript',
+  'clean code',
+  'digital experiences',
+  'web applications',
+  'open-source',
+  'cybersecurity',
+];
+const keywordPattern = new RegExp(`(${keywords.join('|')})`, 'gi');
 
 export default function About() {
   const { t, tArray } = useLanguage();
   const bio = tArray('about.bio');
 
+  // Memoized keyword highlighting function
+  const highlightKeywords = useCallback((text: string): React.ReactNode => {
+    const parts = text.split(keywordPattern);
+    return parts.map((part, i) =>
+      keywordPattern.test(part) ? (
+        <span key={i} className="text-cyber-cyan">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  }, []);
+
+  // Memoize highlighted bio paragraphs
+  const highlightedBio = useMemo(() =>
+    bio.map((paragraph, index) => ({
+      key: index,
+      content: highlightKeywords(paragraph),
+    })),
+    [bio, highlightKeywords]
+  );
+
   return (
-    <section id="about" className="py-20 md:py-32 relative overflow-hidden">
+    <section id="about" className="py-20 md:py-32 relative overflow-hidden" aria-labelledby="about-heading">
       {/* Section Header */}
       <motion.div
         initial="initial"
@@ -23,10 +64,10 @@ export default function About() {
           <p className="text-cyber-cyan font-mono text-sm mb-2">
             {t('about.label')}
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
+          <h2 id="about-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
             {t('about.title')}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" />
+          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" aria-hidden="true" />
         </motion.div>
       </motion.div>
 
@@ -48,7 +89,7 @@ export default function About() {
                   {/* Avatar Image */}
                   <Image
                     src="/cyberpunk-avatar.jpeg"
-                    alt="Profile Avatar"
+                    alt={`${personalInfo.name} - Full-Stack Developer`}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 384px"
@@ -84,6 +125,7 @@ export default function About() {
                   ease: 'easeInOut',
                 }}
                 className="absolute -top-6 -right-6 w-16 h-16 border-2 border-cyber-cyan/30 rounded-lg"
+                aria-hidden="true"
               />
               <motion.div
                 animate={{
@@ -96,6 +138,7 @@ export default function About() {
                   ease: 'easeInOut',
                 }}
                 className="absolute -bottom-6 -left-6 w-20 h-20 border-2 border-cyber-pink/30 rounded-full"
+                aria-hidden="true"
               />
               <motion.div
                 animate={{
@@ -110,6 +153,7 @@ export default function About() {
                 style={{
                   boxShadow: '0 0 20px #b100ff',
                 }}
+                aria-hidden="true"
               />
             </div>
           </motion.div>
@@ -123,13 +167,13 @@ export default function About() {
             className="lg:col-span-7"
           >
             <div className="space-y-6">
-              {bio.map((paragraph, index) => (
+              {highlightedBio.map(({ key, content }) => (
                 <motion.p
-                  key={index}
+                  key={key}
                   variants={fadeInRight}
                   className="text-cyber-gray text-base md:text-lg leading-relaxed"
                 >
-                  {highlightKeywords(paragraph)}
+                  {content}
                 </motion.p>
               ))}
             </div>
@@ -163,47 +207,8 @@ export default function About() {
       </div>
 
       {/* Background Decorations */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-cyber-cyan/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyber-purple/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-cyber-cyan/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyber-purple/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
     </section>
   );
-}
-
-function highlightKeywords(text: string): React.ReactNode {
-  const keywords = [
-    'React',
-    'Next.js',
-    'Node.js',
-    'full-stack developer',
-    'TypeScript',
-    'JavaScript',
-    'clean code',
-    'digital experiences',
-    'web applications',
-    'open-source',
-    'cybersecurity',
-  ];
-
-  let result: React.ReactNode[] = [text];
-
-  keywords.forEach((keyword) => {
-    result = result.flatMap((part) => {
-      if (typeof part !== 'string') return part;
-
-      const regex = new RegExp(`(${keyword})`, 'gi');
-      const parts = part.split(regex);
-
-      return parts.map((p, i) =>
-        regex.test(p) ? (
-          <span key={`${keyword}-${i}`} className="text-cyber-cyan">
-            {p}
-          </span>
-        ) : (
-          p
-        )
-      );
-    });
-  });
-
-  return result;
 }

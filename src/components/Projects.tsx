@@ -14,7 +14,7 @@ export default function Projects() {
   const otherProjects = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" className="py-20 md:py-32 relative">
+    <section id="projects" className="py-20 md:py-32 relative" aria-labelledby="projects-heading">
       {/* Section Header */}
       <motion.div
         initial="initial"
@@ -27,10 +27,10 @@ export default function Projects() {
           <p className="text-cyber-cyan font-mono text-sm mb-2">
             {t('projects.label')}
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
+          <h2 id="projects-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
             {t('projects.title')}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" />
+          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" aria-hidden="true" />
         </motion.div>
       </motion.div>
 
@@ -54,14 +54,14 @@ export default function Projects() {
                 <div className="h-full p-6 flex flex-col">
                   {/* Featured Badge */}
                   <div className="flex items-center gap-2 mb-4">
-                    <Star className="text-cyber-cyan/70" size={14} />
+                    <Star className="text-cyber-cyan/70" size={14} aria-hidden="true" />
                     <span className="text-cyber-cyan/70 text-xs font-mono uppercase tracking-wider">
                       {t('projects.featured')}
                     </span>
                   </div>
 
                   {/* Project Image */}
-                  <div className="relative h-40 mb-5 rounded-lg overflow-hidden bg-gradient-to-br from-cyber-black to-cyber-black/80 border border-white/5">
+                  <div className="relative h-40 mb-5 rounded-lg overflow-hidden bg-gradient-to-br from-cyber-black to-cyber-black/80 border border-white/5" aria-hidden="true">
                     <div className="w-full h-full flex items-center justify-center">
                       <div className="text-3xl font-mono text-cyber-cyan/20 group-hover:text-cyber-cyan/35 transition-colors">
                         {`<${t(`projects.items.${project.id}.title`).charAt(0)} />`}
@@ -105,9 +105,9 @@ export default function Projects() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub`}
+                          aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub (opens in new tab)`}
                         >
-                          <Github size={16} className="mr-2" />
+                          <Github size={16} className="mr-2" aria-hidden="true" />
                           {t('projects.code')}
                         </a>
                       </Button>
@@ -123,9 +123,9 @@ export default function Projects() {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo`}
+                          aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo (opens in new tab)`}
                         >
-                          <ExternalLink size={16} className="mr-2" />
+                          <ExternalLink size={16} className="mr-2" aria-hidden="true" />
                           {t('projects.live')}
                         </a>
                       </Button>
@@ -164,7 +164,7 @@ export default function Projects() {
               >
                 <div className="glass cyber-clip h-full p-5">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="p-2 rounded-lg bg-cyber-purple/10 border border-cyber-purple/30">
+                    <div className="p-2 rounded-lg bg-cyber-purple/10 border border-cyber-purple/30" aria-hidden="true">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-6 h-6 text-cyber-purple"
@@ -187,9 +187,9 @@ export default function Projects() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-cyber-gray hover:text-cyber-cyan transition-colors"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub`}
+                          aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub (opens in new tab)`}
                         >
-                          <Github size={18} />
+                          <Github size={18} aria-hidden="true" />
                         </a>
                       )}
                       {project.liveUrl && (
@@ -198,9 +198,9 @@ export default function Projects() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-cyber-gray hover:text-cyber-pink transition-colors"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo`}
+                          aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo (opens in new tab)`}
                         >
-                          <ExternalLink size={18} />
+                          <ExternalLink size={18} aria-hidden="true" />
                         </a>
                       )}
                     </div>

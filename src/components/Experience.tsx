@@ -11,7 +11,7 @@ export default function Experience() {
   const { t, tArray } = useLanguage();
 
   return (
-    <section id="experience" className="py-20 md:py-32 relative">
+    <section id="experience" className="py-20 md:py-32 relative" aria-labelledby="experience-heading">
       {/* Section Header */}
       <motion.div
         initial="initial"
@@ -24,10 +24,10 @@ export default function Experience() {
           <p className="text-cyber-cyan font-mono text-sm mb-2">
             {t('experience.label')}
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
+          <h2 id="experience-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
             {t('experience.title')}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" />
+          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" aria-hidden="true" />
         </motion.div>
       </motion.div>
 
@@ -35,7 +35,7 @@ export default function Experience() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="relative">
           {/* Timeline Line */}
-          <div className="timeline-line hidden md:block" />
+          <div className="timeline-line hidden md:block" aria-hidden="true" />
 
           {/* Timeline Items */}
           <div className="space-y-12 md:space-y-0">
@@ -63,6 +63,7 @@ export default function Experience() {
                     style={{
                       boxShadow: '0 0 10px #00d9ff, 0 0 20px rgba(0, 217, 255, 0.5)',
                     }}
+                    aria-hidden="true"
                   />
 
                   {/* Mobile Timeline Dot */}
@@ -71,10 +72,11 @@ export default function Experience() {
                     style={{
                       boxShadow: '0 0 10px #00d9ff',
                     }}
+                    aria-hidden="true"
                   />
 
                   {/* Mobile Timeline Line */}
-                  <div className="md:hidden absolute left-[1.375rem] top-3 w-0.5 h-full bg-gradient-to-b from-cyber-cyan to-cyber-purple" />
+                  <div className="md:hidden absolute left-[1.375rem] top-3 w-0.5 h-full bg-gradient-to-b from-cyber-cyan to-cyber-purple" aria-hidden="true" />
 
                   {/* Card */}
                   <motion.div
@@ -85,7 +87,7 @@ export default function Experience() {
                   >
                     {/* Header */}
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="p-3 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30">
+                      <div className="p-3 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30" aria-hidden="true">
                         <Briefcase className="text-cyber-cyan" size={24} />
                       </div>
                       <div className="flex-1">
@@ -98,13 +100,13 @@ export default function Experience() {
                     </div>
 
                     {/* Description */}
-                    <ul className="space-y-2 mb-6">
+                    <ul className="space-y-2 mb-6" role="list">
                       {translatedDescription.map((item, i) => (
                         <li
                           key={i}
                           className="flex items-start gap-2 text-cyber-gray text-sm"
                         >
-                          <span className="text-cyber-cyan mt-1">▹</span>
+                          <span className="text-cyber-cyan mt-1" aria-hidden="true">▹</span>
                           <span>{item}</span>
                         </li>
                       ))}

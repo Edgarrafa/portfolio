@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navItems } from '@/lib/data';
 import { cn } from '@/lib/utils';
@@ -17,33 +17,51 @@ const navTranslationKeys: Record<string, string> = {
   contact: 'nav.contact',
 };
 
+// Debounce utility
+function debounce<T extends (...args: Parameters<T>) => void>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  return (...args: Parameters<T>) => {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
+
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
+  const sectionsRef = useRef(navItems.map((item) => item.href.replace('#', '')));
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      // Update active section based on scroll position
-      const sections = navItems.map((item) => item.href.replace('#', ''));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
-          }
+  const updateActiveSection = useCallback(() => {
+    const sections = sectionsRef.current;
+    for (const section of [...sections].reverse()) {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 150) {
+          setActiveSection(section);
+          break;
         }
       }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    }
   }, []);
+
+  useEffect(() => {
+    const handleScroll = debounce(() => {
+      setIsScrolled(window.scrollY > 50);
+      updateActiveSection();
+    }, 10);
+
+    // Initial check
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [updateActiveSection]);
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
@@ -80,46 +98,51 @@ export default function Navigation() {
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
             {/* Language Toggle */}
             <LanguageToggle />
 
-            <ul className="flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <motion.li
-                key={item.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <a
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                  className={cn(
-                    'relative py-2 text-sm font-medium transition-colors',
-                    activeSection === item.href.replace('#', '')
-                      ? 'text-cyber-cyan'
-                      : 'text-cyber-gray hover:text-cyber-white'
-                  )}
+            <ul className="flex items-center gap-8" role="list">
+            {navItems.map((item, index) => {
+              const isActive = activeSection === item.href.replace('#', '');
+              return (
+                <motion.li
+                  key={item.href}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  {t(navTranslationKeys[item.href.replace('#', '')])}
-                  {activeSection === item.href.replace('#', '') && (
-                    <motion.span
-                      layoutId="activeSection"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-cyber-cyan"
-                      style={{
-                        boxShadow: '0 0 10px #00d9ff, 0 0 20px #00d9ff',
-                      }}
-                    />
-                  )}
-                </a>
-              </motion.li>
-            ))}
+                  <a
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item.href);
+                    }}
+                    className={cn(
+                      'relative py-2 text-sm font-medium transition-colors',
+                      isActive
+                        ? 'text-cyber-cyan'
+                        : 'text-cyber-gray hover:text-cyber-white'
+                    )}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {t(navTranslationKeys[item.href.replace('#', '')])}
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeSection"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-cyber-cyan"
+                        style={{
+                          boxShadow: '0 0 10px #00d9ff, 0 0 20px #00d9ff',
+                        }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </a>
+                </motion.li>
+              );
+            })}
             </ul>
-          </div>
+          </nav>
 
           {/* Mobile: Language Toggle + Menu Button */}
           <div className="flex md:hidden items-center gap-3">
@@ -142,40 +165,45 @@ export default function Navigation() {
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
+            <motion.nav
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="md:hidden overflow-hidden"
+              aria-label="Mobile navigation"
             >
-              <ul className="py-4 space-y-2">
-                {navItems.map((item, index) => (
-                  <motion.li
-                    key={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <a
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      }}
-                      className={cn(
-                        'block py-3 px-4 rounded-lg transition-all',
-                        activeSection === item.href.replace('#', '')
-                          ? 'text-cyber-cyan bg-cyber-cyan/10 border-l-2 border-cyber-cyan'
-                          : 'text-cyber-gray hover:text-cyber-white hover:bg-white/5'
-                      )}
+              <ul className="py-4 space-y-2" role="list">
+                {navItems.map((item, index) => {
+                  const isActive = activeSection === item.href.replace('#', '');
+                  return (
+                    <motion.li
+                      key={item.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
                     >
-                      {t(navTranslationKeys[item.href.replace('#', '')])}
-                    </a>
-                  </motion.li>
-                ))}
+                      <a
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavClick(item.href);
+                        }}
+                        className={cn(
+                          'block py-3 px-4 rounded-lg transition-all',
+                          isActive
+                            ? 'text-cyber-cyan bg-cyber-cyan/10 border-l-2 border-cyber-cyan'
+                            : 'text-cyber-gray hover:text-cyber-white hover:bg-white/5'
+                        )}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        {t(navTranslationKeys[item.href.replace('#', '')])}
+                      </a>
+                    </motion.li>
+                  );
+                })}
               </ul>
-            </motion.div>
+            </motion.nav>
           )}
         </AnimatePresence>
       </div>

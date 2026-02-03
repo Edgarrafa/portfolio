@@ -17,7 +17,7 @@ export default function Contact() {
   const { t } = useLanguage();
 
   return (
-    <section id="contact" className="py-20 md:py-32 relative">
+    <section id="contact" className="py-20 md:py-32 relative" aria-labelledby="contact-heading">
       {/* Section Header */}
       <motion.div
         initial="initial"
@@ -30,10 +30,10 @@ export default function Contact() {
           <p className="text-cyber-cyan font-mono text-sm mb-2">
             {t('contact.label')}
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
+          <h2 id="contact-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
             {t('contact.title')}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto mb-6" />
+          <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto mb-6" aria-hidden="true" />
           <p className="text-cyber-gray max-w-xl mx-auto">
             {t('contact.subtitle')}
           </p>
@@ -54,36 +54,39 @@ export default function Contact() {
             <a
               href={`mailto:${personalInfo.email}`}
               className="inline-flex items-center gap-3 px-6 py-4 rounded-lg glass border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan hover:shadow-[0_0_20px_rgba(0,217,255,0.2)] transition-all group"
+              aria-label={`Send email to ${personalInfo.email}`}
             >
-              <Mail size={24} className="group-hover:scale-110 transition-transform" />
+              <Mail size={24} className="group-hover:scale-110 transition-transform" aria-hidden="true" />
               <span className="text-lg md:text-xl font-mono">{personalInfo.email}</span>
             </a>
           </motion.div>
 
           {/* Social Links */}
           <motion.div variants={fadeInUp} className="mb-12">
-            <h3 className="text-sm font-mono text-cyber-gray text-center mb-4 uppercase tracking-wider">
+            <h3 id="connect-heading" className="text-sm font-mono text-cyber-gray text-center mb-4 uppercase tracking-wider">
               {t('contact.connect')}
             </h3>
-            <div className="flex justify-center flex-wrap gap-4">
+            <ul className="flex justify-center flex-wrap gap-4" role="list" aria-labelledby="connect-heading">
               {personalInfo.socialLinks.map((link) => {
                 const Icon = socialIcons[link.icon] || Github;
                 return (
-                  <motion.a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-3 rounded-lg border border-white/10 text-cyber-gray hover:text-cyber-white hover:border-white/20 hover:bg-white/5 transition-all"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Icon size={18} />
-                    <span className="font-medium">{link.name}</span>
-                  </motion.a>
+                  <li key={link.name}>
+                    <motion.a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-5 py-3 rounded-lg border border-white/10 text-cyber-gray hover:text-cyber-white hover:border-white/20 hover:bg-white/5 transition-all"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      aria-label={`${link.name} (opens in new tab)`}
+                    >
+                      <Icon size={18} aria-hidden="true" />
+                      <span className="font-medium">{link.name}</span>
+                    </motion.a>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           </motion.div>
 
           {/* Resume Download */}
@@ -106,9 +109,11 @@ export default function Contact() {
           <motion.div
             variants={fadeInUp}
             className="glass cyber-clip p-6 text-center max-w-md mx-auto"
+            role="status"
+            aria-live="polite"
           >
             <div className="flex items-center justify-center gap-3 mb-2">
-              <span className="relative flex h-3 w-3">
+              <span className="relative flex h-3 w-3" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500" />
               </span>
@@ -124,7 +129,7 @@ export default function Contact() {
       </motion.div>
 
       {/* Background Decorations */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-cyber-cyan/50 to-transparent" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-cyber-cyan/50 to-transparent" aria-hidden="true" />
     </section>
   );
 }
