@@ -32,19 +32,19 @@ export const experiences: Experience[] = [
     id: '1',
     company: 'Meltwater',
     duration: '2024 - Present',
-    technologies: ['React', 'Next.js', 'Vue.js', 'Stencil.js', 'TypeScript', 'Jest', 'Redux', 'Zustand', 'Context API', 'Restful APIs', 'Material UI'],
+    technologies: ['React', 'Next.js', 'Vue.js', 'Stencil.js', 'TypeScript', 'Jest', 'Redux', 'Zustand', 'Context API', 'Restful APIs', 'Material UI', 'Tailwind CSS', 'Turborepo', 'GitHub Actions', 'Github', 'Figma'],
   },
   {
     id: '2',
     company: 'EPAM Systems',
     duration: '2021 - 2024',
-    technologies: ['Next.js', 'Express', 'MongoDB', 'Redis', 'GraphQL', 'Tailwind'],
+    technologies: ['React', 'Next.js', 'TypeScript', 'Figma', 'GraphQL', 'SCSS', 'Storybook', 'Webpack', 'Jest', 'Docker', 'Atlassian Suite', 'GitLab'],
   },
   {
     id: '3',
-    company: 'Startup (failed ;c no name)',
+    company: 'Startup',
     duration: '2020 - 2021',
-    technologies: ['React', 'JavaScript', 'SCSS', 'Webpack', 'Jest', 'Figma'],
+    technologies: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'SCSS', 'Express', 'MongoDB', 'Figma', 'GitLab', 'Bulma'],
   },
 ];
 

@@ -12,6 +12,18 @@ export default function Projects() {
   const { t } = useLanguage();
   const featuredProjects = projects.filter((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
+  const centerFeatured = featuredProjects.length <= 2;
+  const centerOther = otherProjects.length <= 2;
+  const featuredGridClass = centerFeatured
+    ? featuredProjects.length === 2
+      ? 'grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto place-items-center'
+      : 'grid grid-cols-1 gap-6 md:gap-8 max-w-3xl mx-auto place-items-center'
+    : 'grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8';
+  const otherGridClass = centerOther
+    ? otherProjects.length === 2
+      ? 'grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto place-items-center'
+      : 'grid grid-cols-1 gap-4 md:gap-6 max-w-2xl mx-auto place-items-center'
+    : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6';
 
   return (
     <section id="projects" className="py-20 md:py-32 relative" aria-labelledby="projects-heading">
@@ -42,13 +54,13 @@ export default function Projects() {
         variants={staggerContainer}
         className="container mx-auto px-4 md:px-6 mb-20"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+        <div className={featuredGridClass}>
           {featuredProjects.map((project) => (
             <motion.div
               key={project.id}
               variants={fadeInUp}
               whileHover={{ y: -5 }}
-              className="group"
+              className={`group ${centerFeatured ? 'w-full max-w-2xl justify-self-center' : 'w-full'}`}
             >
               <div className="glass cyber-clip h-full border border-cyber-cyan/20 hover:border-cyber-cyan/40 transition-colors">
                 <div className="h-full p-6 flex flex-col">
@@ -154,13 +166,13 @@ export default function Projects() {
             {t('projects.otherTitle')}
           </motion.h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className={otherGridClass}>
             {otherProjects.map((project) => (
               <motion.div
                 key={project.id}
                 variants={fadeInUp}
                 whileHover={{ y: -5 }}
-                className="group"
+                className={`group ${centerOther ? 'w-full max-w-xl justify-self-center' : 'w-full'}`}
               >
                 <div className="glass cyber-clip h-full p-5">
                   <div className="flex items-center justify-between mb-4">
