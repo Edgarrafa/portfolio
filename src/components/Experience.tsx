@@ -117,7 +117,6 @@ export default function Experience() {
                       {exp.technologies.map((tech) => (
                         <Badge
                           key={tech}
-                          variant="outline"
                           className="border-cyber-cyan/30 text-cyber-cyan text-xs hover:border-cyber-cyan hover:text-glow-cyan transition-all"
                         >
                           {tech}

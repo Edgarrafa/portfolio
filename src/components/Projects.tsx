@@ -96,7 +96,6 @@ export default function Projects() {
                     {project.technologies.map((tech) => (
                       <Badge
                         key={tech}
-                        variant="outline"
                         className="border-white/10 text-cyber-gray text-xs hover:border-cyber-cyan/30 hover:text-cyber-cyan transition-colors"
                       >
                         {tech}
@@ -108,38 +107,30 @@ export default function Projects() {
                   <div className="flex items-center gap-3 pt-2 border-t border-white/5">
                     {project.githubUrl && (
                       <Button
-                        asChild
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub (opens in new tab)`}
                         variant="ghost"
                         size="sm"
                         className="text-cyber-gray hover:text-cyber-cyan hover:bg-cyber-cyan/5"
                       >
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub (opens in new tab)`}
-                        >
-                          <Github size={16} className="mr-2" aria-hidden="true" />
-                          {t('projects.code')}
-                        </a>
+                        <Github size={16} className="mr-2" aria-hidden="true" />
+                        {t('projects.code')}
                       </Button>
                     )}
                     {project.liveUrl && (
                       <Button
-                        asChild
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo (opens in new tab)`}
                         variant="ghost"
                         size="sm"
                         className="text-cyber-gray hover:text-cyber-cyan hover:bg-cyber-cyan/5"
                       >
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo (opens in new tab)`}
-                        >
-                          <ExternalLink size={16} className="mr-2" aria-hidden="true" />
-                          {t('projects.live')}
-                        </a>
+                        <ExternalLink size={16} className="mr-2" aria-hidden="true" />
+                        {t('projects.live')}
                       </Button>
                     )}
                   </div>

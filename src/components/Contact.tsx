@@ -93,14 +93,13 @@ export default function Contact() {
           {personalInfo.resumeUrl && (
             <motion.div variants={fadeInUp} className="text-center mb-12">
               <Button
-                asChild
+                href={personalInfo.resumeUrl}
+                download
                 variant="outline"
                 className="border-cyber-cyan/30 text-cyber-cyan hover:bg-cyber-cyan/10 hover:border-cyber-cyan/50"
               >
-                <a href={personalInfo.resumeUrl} download>
-                  <Download size={16} className="mr-2" />
-                  {t('contact.downloadResume')}
-                </a>
+                <Download size={16} className="mr-2" />
+                {t('contact.downloadResume')}
               </Button>
             </motion.div>
           )}

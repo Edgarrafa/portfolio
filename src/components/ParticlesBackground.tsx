@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useSyncExternalStore } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 import type { ISourceOptions } from '@tsparticles/engine';
@@ -9,31 +9,28 @@ interface ParticlesBackgroundProps {
   className?: string;
 }
 
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+function subscribeToReducedMotion(onChange: () => void) {
+  const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
+  mediaQuery.addEventListener('change', onChange);
+  return () => mediaQuery.removeEventListener('change', onChange);
+}
+
 export default function ParticlesBackground({ className }: ParticlesBackgroundProps) {
   const [init, setInit] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false
+  );
 
   useEffect(() => {
-    // Check for reduced motion preference
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches);
-    };
-    mediaQuery.addEventListener('change', handleChange);
-
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => {
       setInit(true);
     });
-
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  const particlesLoaded = useCallback(async () => {
-    // Particles initialized
   }, []);
 
   const options: ISourceOptions = useMemo(() => ({
@@ -149,7 +146,6 @@ export default function ParticlesBackground({ className }: ParticlesBackgroundPr
     <Particles
       id="tsparticles"
       className={className}
-      particlesLoaded={particlesLoaded}
       options={options}
       aria-hidden="true"
     />

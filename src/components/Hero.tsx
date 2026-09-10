@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import GlitchText from './GlitchText';
 import { personalInfo } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
@@ -76,12 +75,13 @@ export default function Hero() {
 
         {/* Name with Glitch Effect */}
         <motion.div variants={fadeInUp} className="mb-6">
-          <GlitchText
-            text={personalInfo.name}
-            as="h1"
+          <h1
             id="hero-name"
-            className="text-5xl md:text-7xl lg:text-8xl font-bold font-mono text-cyber-white tracking-tighter"
-          />
+            data-text={personalInfo.name}
+            className="glitch text-5xl md:text-7xl lg:text-8xl font-bold font-mono text-cyber-white tracking-tighter"
+          >
+            {personalInfo.name}
+          </h1>
         </motion.div>
 
         {/* Typing Tagline */}
