@@ -35,7 +35,7 @@ export default function Experience() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="relative">
           {/* Timeline Line */}
-          <div className="timeline-line hidden md:block" aria-hidden="true" />
+          <div className="timeline-line" aria-hidden="true" />
 
           {/* Timeline Items */}
           <div className="space-y-12 md:space-y-0">
@@ -68,15 +68,12 @@ export default function Experience() {
 
                   {/* Mobile Timeline Dot */}
                   <div
-                    className="md:hidden absolute left-5 top-0 w-3 h-3 rounded-full bg-cyber-cyan"
+                    className="md:hidden absolute left-5 top-0 w-3 h-3 rounded-full bg-cyber-cyan z-10"
                     style={{
                       boxShadow: '0 0 10px #00d9ff',
                     }}
                     aria-hidden="true"
                   />
-
-                  {/* Mobile Timeline Line */}
-                  <div className="md:hidden absolute left-[1.375rem] top-3 w-0.5 h-full bg-gradient-to-b from-cyber-cyan to-cyber-purple" aria-hidden="true" />
 
                   {/* Card */}
                   <motion.div

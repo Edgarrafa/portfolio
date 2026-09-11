@@ -261,17 +261,17 @@
 /* ===== Timeline ===== */
 .timeline-line {
   position: absolute;
-  left: 50%;
+  left: 1.625rem;
   transform: translateX(-50%);
   width: 2px;
   height: 100%;
   background: linear-gradient(180deg, #00d9ff, #b100ff, #ff006e);
 }
 
-@media (max-width: 768px) {
+/* Mobile: shift the same line to the left, centered on the timeline dots */
+@media (min-width: 768px) {
   .timeline-line {
-    left: 20px;
-    transform: none;
+    left: 50%;
   }
 }
 
