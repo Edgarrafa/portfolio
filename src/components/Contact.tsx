@@ -53,10 +53,10 @@ export default function Contact() {
           <motion.div variants={fadeInUp} className="text-center mb-12">
             <a
               href={`mailto:${personalInfo.email}`}
-              className="inline-flex items-center gap-3 px-6 py-4 rounded-lg glass border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan hover:shadow-[0_0_20px_rgba(0,217,255,0.2)] transition-all group"
+              className="inline-flex items-center gap-3 px-6 py-4 rounded-lg glass border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan transition-colors"
               aria-label={`Send email to ${personalInfo.email}`}
             >
-              <Mail size={24} className="group-hover:scale-110 transition-transform" aria-hidden="true" />
+              <Mail size={24} aria-hidden="true" />
               <span className="text-lg md:text-xl font-mono">{personalInfo.email}</span>
             </a>
           </motion.div>

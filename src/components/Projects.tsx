@@ -73,12 +73,10 @@ export default function Projects() {
                   </div>
 
                   {/* Project Image */}
-                  <div className="relative h-40 mb-5 rounded-lg overflow-hidden bg-gradient-to-br from-cyber-black to-cyber-black/80 border border-white/5" aria-hidden="true">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-3xl font-mono text-cyber-cyan/20 group-hover:text-cyber-cyan/35 transition-colors">
-                        {`<${t(`projects.items.${project.id}.title`).charAt(0)} />`}
-                      </div>
-                    </div>
+                  <div className="h-40 mb-5 rounded-lg flex items-center justify-center bg-cyber-black border border-white/5" aria-hidden="true">
+                    <span className="text-3xl font-mono text-cyber-cyan/20 group-hover:text-cyber-cyan/35 transition-colors">
+                      {`<${t(`projects.items.${project.id}.title`).charAt(0)} />`}
+                    </span>
                   </div>
 
                   {/* Content */}

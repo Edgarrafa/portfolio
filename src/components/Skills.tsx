@@ -17,53 +17,33 @@ const categoryKeys: Record<SkillCategory, string> = {
 // Static class mappings to prevent Tailwind purging
 const categoryStyles: Record<SkillCategory, {
   dotClass: string;
-  dotColor: string;
   lineClass: string;
-  iconBgClass: string;
-  iconBorderClass: string;
-  iconHoverClass: string;
+  iconClass: string;
   textClass: string;
-  hoverShadow: string;
 }> = {
   frontend: {
     dotClass: 'bg-cyber-cyan',
-    dotColor: 'var(--color-cyber-cyan)',
     lineClass: 'from-cyber-cyan/50 to-transparent',
-    iconBgClass: 'bg-cyber-cyan/10',
-    iconBorderClass: 'border-cyber-cyan/30',
-    iconHoverClass: 'group-hover:border-cyber-cyan',
+    iconClass: 'bg-cyber-cyan/10 border-cyber-cyan/30 group-hover:border-cyber-cyan',
     textClass: 'text-cyber-cyan',
-    hoverShadow: '0 0 20px rgba(0, 217, 255, 0.5)',
   },
   backend: {
     dotClass: 'bg-cyber-pink',
-    dotColor: 'var(--color-cyber-pink)',
     lineClass: 'from-cyber-pink/50 to-transparent',
-    iconBgClass: 'bg-cyber-pink/10',
-    iconBorderClass: 'border-cyber-pink/30',
-    iconHoverClass: 'group-hover:border-cyber-pink',
+    iconClass: 'bg-cyber-pink/10 border-cyber-pink/30 group-hover:border-cyber-pink',
     textClass: 'text-cyber-pink',
-    hoverShadow: '0 0 20px rgba(255, 0, 110, 0.5)',
   },
   tools: {
     dotClass: 'bg-cyber-purple',
-    dotColor: 'var(--color-cyber-purple)',
     lineClass: 'from-cyber-purple/50 to-transparent',
-    iconBgClass: 'bg-cyber-purple/10',
-    iconBorderClass: 'border-cyber-purple/30',
-    iconHoverClass: 'group-hover:border-cyber-purple',
+    iconClass: 'bg-cyber-purple/10 border-cyber-purple/30 group-hover:border-cyber-purple',
     textClass: 'text-cyber-purple',
-    hoverShadow: '0 0 20px rgba(177, 0, 255, 0.5)',
   },
   other: {
     dotClass: 'bg-cyber-gray',
-    dotColor: 'var(--color-cyber-gray)',
     lineClass: 'from-cyber-gray/50 to-transparent',
-    iconBgClass: 'bg-cyber-gray/10',
-    iconBorderClass: 'border-cyber-gray/30',
-    iconHoverClass: 'group-hover:border-cyber-gray',
+    iconClass: 'bg-cyber-gray/10 border-cyber-gray/30 group-hover:border-cyber-gray',
     textClass: 'text-cyber-gray',
-    hoverShadow: '0 0 20px rgba(156, 163, 175, 0.5)',
   },
 };
 
@@ -126,9 +106,6 @@ export default function Skills() {
                 >
                   <div
                     className={`w-3 h-3 rounded-full ${styles.dotClass}`}
-                    style={{
-                      boxShadow: `0 0 10px ${styles.dotColor}, 0 0 20px ${styles.dotColor}`,
-                    }}
                     aria-hidden="true"
                   />
                   <h3 id={`${category}-heading`} className="text-xl md:text-2xl font-bold font-mono text-cyber-white">
@@ -148,15 +125,12 @@ export default function Skills() {
                     <motion.li
                       key={skill.name}
                       variants={fadeInUp}
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: styles.hoverShadow,
-                      }}
+                      whileHover={{ scale: 1.05 }}
                       className="glass cyber-clip p-4 text-center group cursor-default"
                     >
                       {/* Icon */}
                       <div
-                        className={`w-12 h-12 mx-auto mb-3 rounded-lg ${styles.iconBgClass} border ${styles.iconBorderClass} flex items-center justify-center ${styles.iconHoverClass} transition-colors`}
+                        className={`w-12 h-12 mx-auto mb-3 rounded-lg border flex items-center justify-center transition-colors ${styles.iconClass}`}
                         aria-hidden="true"
                       >
                         <span className={`${styles.textClass} text-2xl font-bold font-mono`}>

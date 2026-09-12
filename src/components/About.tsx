@@ -82,79 +82,18 @@ export default function About() {
             variants={fadeInLeft}
             className="lg:col-span-5"
           >
-            <div className="relative max-w-sm mx-auto lg:mx-0">
-              {/* Holographic Border Effect */}
-              <div className="holo-border rounded-lg p-1">
-                <div className="relative aspect-square rounded-lg overflow-hidden bg-cyber-black">
-                  {/* Avatar Image */}
-                  <Image
-                    src="/cyberpunk-avatar.jpeg"
-                    alt={`${personalInfo.name} - Full-Stack Developer`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 384px"
-                    priority
-                  />
-
-                  {/* Cyberpunk Color Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyber-cyan/10 via-transparent to-cyber-pink/15 mix-blend-overlay" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/60 via-transparent to-transparent" />
-
-                  {/* Grid Overlay */}
-                  <div className="absolute inset-0 cyber-grid opacity-20" />
-
-                  {/* Scan Line Effect */}
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute w-full h-8 bg-gradient-to-b from-transparent via-cyber-cyan/10 to-transparent animate-[scanline-move_4s_linear_infinite]" />
-                  </div>
-
-                  {/* Vignette Effect */}
-                  <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.6)]" />
-                </div>
-              </div>
-
-              {/* Floating Decorations */}
-              <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                  rotate: [0, 5, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="absolute -top-6 -right-6 w-16 h-16 border-2 border-cyber-cyan/30 rounded-lg"
-                aria-hidden="true"
+            <div className="relative aspect-square max-w-sm mx-auto lg:mx-0 rounded-lg overflow-hidden border border-cyber-cyan/30 bg-cyber-black">
+              <Image
+                src="/cyberpunk-avatar.jpeg"
+                alt={`${personalInfo.name} - Full-Stack Developer`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 384px"
+                priority
               />
-              <motion.div
-                animate={{
-                  y: [0, 10, 0],
-                  rotate: [0, -5, 0],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="absolute -bottom-6 -left-6 w-20 h-20 border-2 border-cyber-pink/30 rounded-full"
-                aria-hidden="true"
-              />
-              <motion.div
-                animate={{
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="absolute top-1/2 -right-10 w-4 h-4 bg-cyber-purple rounded-full"
-                style={{
-                  boxShadow: '0 0 20px #b100ff',
-                }}
-                aria-hidden="true"
-              />
+
+              {/* Cyberpunk Tint */}
+              <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/60 via-transparent to-cyber-cyan/10" />
             </div>
           </motion.div>
 

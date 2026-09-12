@@ -60,28 +60,19 @@ export default function Experience() {
                     className={`hidden md:flex absolute top-0 ${
                       isLeft ? 'right-0 translate-x-1/2' : 'left-0 -translate-x-1/2'
                     } w-4 h-4 rounded-full bg-cyber-cyan border-4 border-cyber-black z-10`}
-                    style={{
-                      boxShadow: '0 0 10px #00d9ff, 0 0 20px rgba(0, 217, 255, 0.5)',
-                    }}
+                    style={{ boxShadow: '0 0 10px #00d9ff' }}
                     aria-hidden="true"
                   />
 
                   {/* Mobile Timeline Dot */}
                   <div
                     className="md:hidden absolute left-5 top-0 w-3 h-3 rounded-full bg-cyber-cyan z-10"
-                    style={{
-                      boxShadow: '0 0 10px #00d9ff',
-                    }}
+                    style={{ boxShadow: '0 0 10px #00d9ff' }}
                     aria-hidden="true"
                   />
 
                   {/* Card */}
-                  <motion.div
-                    className="glass cyber-clip p-6 md:p-8 ml-12 md:ml-0"
-                    whileHover={{
-                      boxShadow: '0 0 20px rgba(0, 217, 255, 0.3)',
-                    }}
-                  >
+                  <div className="glass cyber-clip p-6 md:p-8 ml-12 md:ml-0">
                     {/* Header */}
                     <div className="flex items-start gap-4 mb-4">
                       <div className="p-3 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30" aria-hidden="true">
@@ -114,13 +105,13 @@ export default function Experience() {
                       {exp.technologies.map((tech) => (
                         <Badge
                           key={tech}
-                          className="border-cyber-cyan/30 text-cyber-cyan text-xs hover:border-cyber-cyan hover:text-glow-cyan transition-all"
+                          className="border-cyber-cyan/30 text-cyber-cyan text-xs hover:border-cyber-cyan transition-colors"
                         >
                           {tech}
                         </Badge>
                       ))}
                     </div>
-                  </motion.div>
+                  </div>
                 </motion.div>
               );
             })}

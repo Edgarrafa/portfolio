@@ -131,9 +131,7 @@ export default function Navigation() {
                       <motion.span
                         layoutId="activeSection"
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-cyber-cyan"
-                        style={{
-                          boxShadow: '0 0 10px #00d9ff, 0 0 20px #00d9ff',
-                        }}
+                        style={{ boxShadow: '0 0 10px #00d9ff' }}
                         aria-hidden="true"
                       />
                     )}
