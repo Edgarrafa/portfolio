@@ -10,7 +10,6 @@ import LanguageToggle from './LanguageToggle';
 
 const navTranslationKeys: Record<string, string> = {
   home: 'nav.home',
-  about: 'nav.about',
   experience: 'nav.experience',
   projects: 'nav.projects',
   skills: 'nav.skills',

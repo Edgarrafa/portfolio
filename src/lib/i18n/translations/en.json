@@ -1,7 +1,6 @@
 {
   "nav": {
     "home": "Home",
-    "about": "About",
     "experience": "Experience",
     "projects": "Projects",
     "skills": "Skills",
@@ -10,22 +9,19 @@
   "hero": {
     "greeting": "// INITIALIZING DEVELOPER PROFILE...",
     "tagline": "Full-Stack Developer | Building Digital Futures",
-    "viewProjects": "View Projects",
-    "getInTouch": "Get In Touch",
-    "scroll": "Scroll"
-  },
-  "about": {
-    "label": "// ABOUT.ME",
-    "title": "Who I Am",
+    "idLabel": "// ID",
     "bio": [
       "I'm a full-stack developer with a passion for crafting immersive digital experiences. I specialize in building high-performance web applications using modern technologies like React, Next.js, and Node.js.",
       "With a keen eye for optimization and a love for clean code, I transform complex problems into elegant solutions. I thrive in the intersection of pragmatism and technology.",
-      "When I'm not coding, you'll find me exploring new technologies, watching Anime, or gaming. Let's connect and build something amazing together!"
+      "When I'm not coding, you'll find me exploring new technologies, watching Anime, or gaming."
     ],
-    "stats": {
-      "yearsExperience": "Years Experience",
-      "projectsCompleted": "Projects Completed",
-      "happyClients": "Happy Clients"
+    "facts": {
+      "experience": "Experience",
+      "experienceValue": "6+ years",
+      "role": "Latest Role",
+      "stack": "Core Stack",
+      "status": "Status",
+      "statusValue": "Open to full-time roles · Available immediately"
     }
   },
   "experience": {
@@ -112,11 +108,11 @@
   "contact": {
     "label": "// CONTACT.INIT",
     "title": "Get In Touch",
-    "subtitle": "Have a project in mind or want to collaborate? Feel free to reach out. I'm always open to discussing new opportunities.",
+    "subtitle": "Looking for an engineer to join your team? Feel free to reach out. I'm always open to discussing new opportunities.",
     "connect": "Connect",
     "downloadResume": "Download Resume",
     "available": "Available for Opportunities",
-    "availableText": "Currently accepting freelance projects and full-time positions."
+    "availableText": "Open to full-time Software Engineer roles."
   },
   "footer": {
     "designedWith": "Designed & Built with",

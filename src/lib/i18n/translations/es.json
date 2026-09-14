@@ -1,7 +1,6 @@
 {
   "nav": {
     "home": "Inicio",
-    "about": "Sobre Mí",
     "experience": "Experiencia",
     "projects": "Proyectos",
     "skills": "Habilidades",
@@ -10,22 +9,19 @@
   "hero": {
     "greeting": "// INICIALIZANDO PERFIL DE DESARROLLADOR...",
     "tagline": "Desarrollador Full-Stack | Construyendo Futuros Digitales",
-    "viewProjects": "Ver Proyectos",
-    "getInTouch": "Contáctame",
-    "scroll": "Desplazar"
-  },
-  "about": {
-    "label": "// SOBRE.MI",
-    "title": "Quién Soy",
+    "idLabel": "// ID",
     "bio": [
       "Soy un desarrollador full-stack con pasión por crear experiencias digitales inmersivas. Me especializo en construir aplicaciones web de alto rendimiento usando tecnologías modernas como React, Next.js y Node.js.",
       "Con un ojo agudo para la optimización y amor por el código limpio, transformo problemas complejos en soluciones elegantes. Prospero en la intersección del pragmatismo y la tecnología.",
-      "Cuando no estoy programando, me encuentro explorando nuevas tecnologías, viendo Anime o jugando videojuegos. ¡Conectemos y construyamos algo increíble juntos!"
+      "Cuando no estoy programando, me encuentro explorando nuevas tecnologías, viendo Anime o jugando videojuegos."
     ],
-    "stats": {
-      "yearsExperience": "Años de Experiencia",
-      "projectsCompleted": "Proyectos Completados",
-      "happyClients": "Clientes Satisfechos"
+    "facts": {
+      "experience": "Experiencia",
+      "experienceValue": "6+ años",
+      "role": "Último Rol",
+      "stack": "Stack Principal",
+      "status": "Estado",
+      "statusValue": "Abierto a puestos de tiempo completo · Disponibilidad inmediata"
     }
   },
   "experience": {
@@ -112,11 +108,11 @@
   "contact": {
     "label": "// CONTACTO.INIT",
     "title": "Contacto",
-    "subtitle": "¿Tienes un proyecto en mente o quieres colaborar? No dudes en contactarme. Siempre estoy abierto a discutir nuevas oportunidades.",
+    "subtitle": "¿Buscas un ingeniero para unirse a tu equipo? No dudes en contactarme. Siempre estoy abierto a discutir nuevas oportunidades.",
     "connect": "Conectar",
     "downloadResume": "Descargar CV",
     "available": "Disponible para Oportunidades",
-    "availableText": "Actualmente aceptando proyectos freelance y posiciones de tiempo completo."
+    "availableText": "Abierto a puestos de Ingeniero de Software de tiempo completo."
   },
   "footer": {
     "designedWith": "Diseñado y Construido con",

@@ -20,7 +20,6 @@ export const personalInfo: PersonalInfo = {
 
 export const navItems: NavItem[] = [
   { href: '#home' },
-  { href: '#about' },
   { href: '#experience' },
   { href: '#projects' },
   { href: '#skills' },
@@ -31,7 +30,7 @@ export const experiences: Experience[] = [
   {
     id: '1',
     company: 'Meltwater',
-    duration: '2024 - Present',
+    duration: '2024 - 2026',
     technologies: ['React', 'Next.js', 'Vue.js', 'Stencil.js', 'TypeScript', 'Jest', 'Redux', 'Zustand', 'Context API', 'Restful APIs', 'Material UI', 'Tailwind CSS', 'Turborepo', 'GitHub Actions', 'Github', 'Figma'],
   },
   {

@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { personalInfo } from '@/lib/data';
-import { Button } from '@/components/ui/button';
-import { fadeInUp, staggerContainer } from '@/lib/animations';
-import { ChevronDown, Github, Linkedin, Twitter } from 'lucide-react';
+import { personalInfo, experiences } from '@/lib/data';
+import { fadeInUp, scaleIn, staggerContainer } from '@/lib/animations';
+import { Github, Linkedin, Twitter } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/context';
 
 const ParticlesBackground = dynamic(() => import('./ParticlesBackground'), {
@@ -19,10 +19,47 @@ const socialIcons: Record<string, typeof Github> = {
   twitter: Twitter,
 };
 
+const keywords = [
+  'React',
+  'Next.js',
+  'Node.js',
+  'full-stack developer',
+  'TypeScript',
+  'JavaScript',
+  'clean code',
+  'digital experiences',
+  'web applications',
+  'open-source',
+  'cybersecurity',
+];
+const keywordPattern = new RegExp(`(${keywords.join('|')})`, 'gi');
+
+// split() with a capture group puts the matched keywords at odd indices
+function highlightKeywords(text: string): React.ReactNode {
+  return text.split(keywordPattern).map((part, i) =>
+    i % 2 === 1 ? (
+      <span key={i} className="text-cyber-cyan">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
+
 export default function Hero() {
-  const { t, language } = useLanguage();
+  const { t, tArray, language } = useLanguage();
   const [typedText, setTypedText] = useState('');
   const fullText = t('hero.tagline');
+  const bio = tArray('hero.bio');
+
+  const latestJob = experiences[0];
+  const facts = [
+    { label: t('hero.facts.experience'), value: t('hero.facts.experienceValue'), color: 'text-cyber-cyan' },
+    { label: t('hero.facts.role'), value: `${t(`experience.jobs.${latestJob.id}.role`)} @ ${latestJob.company}`, color: 'text-cyber-pink' },
+    { label: t('hero.facts.stack'), value: 'React · TypeScript · Next.js', color: 'text-cyber-purple' },
+    { label: t('hero.facts.status'), value: t('hero.facts.statusValue'), color: 'text-green-400', live: true },
+  ];
 
   useEffect(() => {
     setTypedText('');
@@ -39,17 +76,10 @@ export default function Hero() {
     return () => clearInterval(typingInterval);
   }, [fullText, language]);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16"
       aria-labelledby="hero-name"
     >
       {/* Particles Background */}
@@ -59,114 +89,162 @@ export default function Hero() {
       <div className="absolute inset-0 cyber-grid z-0" aria-hidden="true" />
 
       {/* Content */}
-      <motion.div
-        variants={staggerContainer}
-        initial="initial"
-        animate="animate"
-        className="relative z-10 container mx-auto px-4 md:px-6 text-center"
-      >
-        {/* Greeting */}
-        <motion.p
-          variants={fadeInUp}
-          className="text-cyber-cyan font-mono text-sm md:text-base mb-4"
-        >
-          {t('hero.greeting')}
-        </motion.p>
-
-        {/* Name with Glitch Effect */}
-        <motion.div variants={fadeInUp} className="mb-6">
-          <h1
-            id="hero-name"
-            data-text={personalInfo.name}
-            className="glitch text-5xl md:text-7xl lg:text-8xl font-bold font-mono text-cyber-white tracking-tighter"
+      <div className="relative z-10 container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Intro Text */}
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+            className="lg:col-span-7 text-center lg:text-left"
           >
-            {personalInfo.name}
-          </h1>
-        </motion.div>
+            {/* Greeting */}
+            <motion.p
+              variants={fadeInUp}
+              className="text-cyber-cyan font-mono text-sm md:text-base mb-4"
+            >
+              {t('hero.greeting')}
+            </motion.p>
 
-        {/* Typing Tagline */}
-        <motion.div
-          variants={fadeInUp}
-          className="h-12 md:h-16 flex items-center justify-center mb-8"
-        >
-          <p className="text-xl md:text-2xl lg:text-3xl text-cyber-gray font-mono">
-            {typedText}
-            <span className="inline-block w-0.5 h-6 md:h-8 bg-cyber-cyan ml-1 animate-pulse" />
-          </p>
-        </motion.div>
+            {/* Name with Glitch Effect */}
+            <motion.div variants={fadeInUp} className="mb-4">
+              <h1
+                id="hero-name"
+                data-text={personalInfo.name}
+                className="glitch text-4xl md:text-6xl lg:text-7xl font-bold font-mono text-cyber-white tracking-tighter"
+              >
+                {personalInfo.name}
+              </h1>
+            </motion.div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          variants={fadeInUp}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-        >
-          <Button
-            onClick={() => scrollToSection('#projects')}
-            className="neon-button bg-cyber-cyan text-cyber-black font-bold px-8 py-6 text-lg hover:bg-cyber-cyan/90 border-none"
-          >
-            {t('hero.viewProjects')}
-          </Button>
-          <Button
-            onClick={() => scrollToSection('#contact')}
-            variant="outline"
-            className="border-cyber-cyan text-cyber-cyan hover:bg-cyber-cyan/10 px-8 py-6 text-lg"
-          >
-            {t('hero.getInTouch')}
-          </Button>
-        </motion.div>
+            {/* Typing Tagline */}
+            <motion.div
+              variants={fadeInUp}
+              className="min-h-12 md:min-h-14 flex items-center justify-center lg:justify-start mb-6"
+            >
+              <p className="text-lg md:text-xl lg:text-2xl text-cyber-gray font-mono">
+                {typedText}
+                <span className="inline-block w-0.5 h-5 md:h-7 bg-cyber-cyan ml-1 align-middle animate-pulse" />
+              </p>
+            </motion.div>
 
-        {/* Social Links */}
-        <motion.ul
-          variants={fadeInUp}
-          className="flex items-center justify-center gap-6"
-          role="list"
-          aria-label="Social links"
-        >
-          {personalInfo.socialLinks.map((link) => {
-            const Icon = socialIcons[link.icon] || Github;
-            return (
-              <li key={link.name}>
-                <motion.a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-lg border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan hover:border-glow-cyan transition-all inline-block"
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label={`${link.name} (opens in new tab)`}
+            {/* Divider */}
+            <motion.div
+              variants={fadeInUp}
+              className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto lg:mx-0 mb-8"
+              aria-hidden="true"
+            />
+
+            {/* Bio */}
+            <div className="space-y-4 mb-10">
+              {bio.map((paragraph, index) => (
+                <motion.p
+                  key={index}
+                  variants={fadeInUp}
+                  className="text-cyber-gray text-base md:text-lg leading-relaxed"
                 >
-                  <Icon size={24} aria-hidden="true" />
-                </motion.a>
-              </li>
-            );
-          })}
-        </motion.ul>
-      </motion.div>
+                  {highlightKeywords(paragraph)}
+                </motion.p>
+              ))}
+            </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <motion.button
-          onClick={() => scrollToSection('#about')}
-          className="flex flex-col items-center gap-2 text-cyber-cyan/60 hover:text-cyber-cyan transition-colors"
-          aria-label="Scroll to About section"
-        >
-          <span className="text-xs font-mono uppercase tracking-widest">
-            {t('hero.scroll')}
-          </span>
-          <ChevronDown className="scroll-indicator" size={24} />
-        </motion.button>
-      </motion.div>
+            {/* Quick Facts */}
+            <motion.dl
+              variants={fadeInUp}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left"
+            >
+              {facts.map(({ label, value, color, live }) => (
+                <div key={label} className="glass cyber-clip px-4 py-3">
+                  <dt className={`font-mono text-xs uppercase tracking-widest mb-1 ${color}`}>
+                    {`> ${label}`}
+                  </dt>
+                  <dd className="flex items-center gap-2 text-cyber-white font-medium">
+                    {live && (
+                      <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                      </span>
+                    )}
+                    {value}
+                  </dd>
+                </div>
+              ))}
+            </motion.dl>
+
+            {/* Social Links */}
+            <motion.ul
+              variants={fadeInUp}
+              className="flex items-center justify-center lg:justify-start gap-6"
+              role="list"
+              aria-label="Social links"
+            >
+              {personalInfo.socialLinks.map((link) => {
+                const Icon = socialIcons[link.icon] || Github;
+                return (
+                  <li key={link.name}>
+                    <motion.a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-lg border border-cyber-cyan/30 text-cyber-cyan hover:border-cyber-cyan hover:border-glow-cyan transition-all inline-block"
+                      whileHover={{ scale: 1.1, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label={`${link.name} (opens in new tab)`}
+                    >
+                      <Icon size={24} aria-hidden="true" />
+                    </motion.a>
+                  </li>
+                );
+              })}
+            </motion.ul>
+          </motion.div>
+
+          {/* Avatar */}
+          <motion.div
+            variants={scaleIn}
+            initial="initial"
+            animate="animate"
+            className="lg:col-span-5 order-first lg:order-last"
+          >
+            <div className="relative max-w-[16rem] lg:max-w-sm mx-auto lg:mr-0 lg:ml-auto">
+              <div className="relative aspect-square rounded-lg overflow-hidden border border-cyber-cyan/30 bg-cyber-black">
+                <Image
+                  src="/cyberpunk-avatar.jpeg"
+                  alt={`${personalInfo.name} - Full-Stack Developer`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 256px, 384px"
+                  priority
+                />
+
+                {/* Cyberpunk Tint */}
+                <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/60 via-transparent to-cyber-cyan/10" />
+              </div>
+
+              {/* HUD Frame Corners */}
+              <div className="absolute -top-3 -left-3 w-8 h-8 border-l-2 border-t-2 border-cyber-cyan" aria-hidden="true" />
+              <div className="absolute -top-3 -right-3 w-8 h-8 border-r-2 border-t-2 border-cyber-cyan" aria-hidden="true" />
+              <div className="absolute -bottom-3 -left-3 w-8 h-8 border-l-2 border-b-2 border-cyber-pink" aria-hidden="true" />
+              <div className="absolute -bottom-3 -right-3 w-8 h-8 border-r-2 border-b-2 border-cyber-pink" aria-hidden="true" />
+
+              {/* ID Caption */}
+              <p className="mt-6 text-center font-mono text-xs text-cyber-cyan/70 tracking-widest">
+                {t('hero.idLabel')}: {personalInfo.name}
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
 
       {/* Decorative Corner Elements */}
       <div className="absolute top-20 left-4 w-20 h-20 border-l-2 border-t-2 border-cyber-cyan/20" aria-hidden="true" />
       <div className="absolute top-20 right-4 w-20 h-20 border-r-2 border-t-2 border-cyber-cyan/20" aria-hidden="true" />
       <div className="absolute bottom-20 left-4 w-20 h-20 border-l-2 border-b-2 border-cyber-pink/20" aria-hidden="true" />
       <div className="absolute bottom-20 right-4 w-20 h-20 border-r-2 border-b-2 border-cyber-pink/20" aria-hidden="true" />
+
+      {/* Background Glows */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-cyber-cyan/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyber-purple/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
     </section>
   );
 }

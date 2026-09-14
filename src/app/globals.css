@@ -183,39 +183,6 @@
   );
 }
 
-/* ===== Scroll Indicator ===== */
-.scroll-indicator {
-  animation: scroll-bounce 2s ease-in-out infinite;
-}
-
-@keyframes scroll-bounce {
-  50% { transform: translateY(10px); }
-}
-
-/* ===== Neon Button ===== */
-.neon-button {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.neon-button::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.4), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
-}
-
-.neon-button:hover::before {
-  transform: translateX(100%);
-}
-
-.neon-button:hover {
-  box-shadow: 0 0 10px #00d9ff, 0 0 20px #00d9ff, 0 0 30px rgba(0, 217, 255, 0.5);
-}
-
 /* ===== Skip to Content ===== */
 .skip-link {
   position: absolute;
