@@ -6,10 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { ExternalLink, Folder, Github, Star } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n/context';
 
 export default function Projects() {
-  const { t } = useLanguage();
   const featuredProjects = projects.filter((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
   const centerFeatured = featuredProjects.length <= 2;
@@ -37,10 +35,10 @@ export default function Projects() {
       >
         <motion.div variants={fadeInUp} className="text-center">
           <p className="text-cyber-cyan font-mono text-sm mb-2">
-            {t('projects.label')}
+            {'// PROJECTS.SHOWCASE'}
           </p>
           <h2 id="projects-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
-            {t('projects.title')}
+            Featured Work
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" aria-hidden="true" />
         </motion.div>
@@ -68,24 +66,24 @@ export default function Projects() {
                   <div className="flex items-center gap-2 mb-4">
                     <Star className="text-cyber-cyan/70" size={14} aria-hidden="true" />
                     <span className="text-cyber-cyan/70 text-xs font-mono uppercase tracking-wider">
-                      {t('projects.featured')}
+                      Featured
                     </span>
                   </div>
 
                   {/* Project Image */}
                   <div className="h-40 mb-5 rounded-lg flex items-center justify-center bg-cyber-black border border-white/5" aria-hidden="true">
                     <span className="text-3xl font-mono text-cyber-cyan/20 group-hover:text-cyber-cyan/35 transition-colors">
-                      {`<${t(`projects.items.${project.id}.title`).charAt(0)} />`}
+                      {`<${project.title.charAt(0)} />`}
                     </span>
                   </div>
 
                   {/* Content */}
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-cyber-white mb-2 group-hover:text-cyber-cyan transition-colors">
-                      {t(`projects.items.${project.id}.title`)}
+                      {project.title}
                     </h3>
                     <p className="text-cyber-gray text-sm mb-4 line-clamp-3 leading-relaxed">
-                      {t(`projects.items.${project.id}.description`)}
+                      {project.description}
                     </p>
                   </div>
 
@@ -108,13 +106,13 @@ export default function Projects() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub (opens in new tab)`}
+                        aria-label={`View ${project.title} on GitHub (opens in new tab)`}
                         variant="ghost"
                         size="sm"
                         className="text-cyber-gray hover:text-cyber-cyan hover:bg-cyber-cyan/5"
                       >
                         <Github size={16} className="mr-2" aria-hidden="true" />
-                        {t('projects.code')}
+                        Code
                       </Button>
                     )}
                     {project.liveUrl && (
@@ -122,13 +120,13 @@ export default function Projects() {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo (opens in new tab)`}
+                        aria-label={`View ${project.title} live demo (opens in new tab)`}
                         variant="ghost"
                         size="sm"
                         className="text-cyber-gray hover:text-cyber-cyan hover:bg-cyber-cyan/5"
                       >
                         <ExternalLink size={16} className="mr-2" aria-hidden="true" />
-                        {t('projects.live')}
+                        Live
                       </Button>
                     )}
                   </div>
@@ -152,7 +150,7 @@ export default function Projects() {
             variants={fadeInUp}
             className="text-xl md:text-2xl font-bold font-mono text-cyber-white mb-8 text-center"
           >
-            {t('projects.otherTitle')}
+            Other Noteworthy Projects
           </motion.h3>
 
           <div className={otherGridClass}>
@@ -175,7 +173,7 @@ export default function Projects() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-cyber-gray hover:text-cyber-cyan transition-colors"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} on GitHub (opens in new tab)`}
+                          aria-label={`View ${project.title} on GitHub (opens in new tab)`}
                         >
                           <Github size={18} aria-hidden="true" />
                         </a>
@@ -186,7 +184,7 @@ export default function Projects() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-cyber-gray hover:text-cyber-pink transition-colors"
-                          aria-label={`View ${t(`projects.items.${project.id}.title`)} live demo (opens in new tab)`}
+                          aria-label={`View ${project.title} live demo (opens in new tab)`}
                         >
                           <ExternalLink size={18} aria-hidden="true" />
                         </a>
@@ -195,10 +193,10 @@ export default function Projects() {
                   </div>
 
                   <h4 className="text-lg font-bold text-cyber-white mb-2 group-hover:text-cyber-cyan transition-colors">
-                    {t(`projects.items.${project.id}.title`)}
+                    {project.title}
                   </h4>
                   <p className="text-cyber-gray text-sm mb-4 line-clamp-2">
-                    {t(`projects.items.${project.id}.description`)}
+                    {project.description}
                   </p>
 
                   <div className="flex flex-wrap gap-2">

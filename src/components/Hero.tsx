@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 import { personalInfo, experiences } from '@/lib/data';
 import { fadeInUp, scaleIn, staggerContainer } from '@/lib/animations';
 import { Github, Linkedin, Twitter } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n/context';
 
 const ParticlesBackground = dynamic(() => import('./ParticlesBackground'), {
   ssr: false,
@@ -47,19 +46,24 @@ function highlightKeywords(text: string): React.ReactNode {
   );
 }
 
-export default function Hero() {
-  const { t, tArray, language } = useLanguage();
-  const [typedText, setTypedText] = useState('');
-  const fullText = t('hero.tagline');
-  const bio = tArray('hero.bio');
+const fullText = 'Full-Stack Developer | Building Digital Futures';
 
-  const latestJob = experiences[0];
-  const facts = [
-    { label: t('hero.facts.experience'), value: t('hero.facts.experienceValue'), color: 'text-cyber-cyan' },
-    { label: t('hero.facts.role'), value: `${t(`experience.jobs.${latestJob.id}.role`)} @ ${latestJob.company}`, color: 'text-cyber-pink' },
-    { label: t('hero.facts.stack'), value: 'React · TypeScript · Next.js', color: 'text-cyber-purple' },
-    { label: t('hero.facts.status'), value: t('hero.facts.statusValue'), color: 'text-green-400', live: true },
-  ];
+const bio = [
+  "I'm a full-stack developer with a passion for crafting immersive digital experiences. I specialize in building high-performance web applications using modern technologies like React, Next.js, and Node.js.",
+  'With a keen eye for optimization and a love for clean code, I transform complex problems into elegant solutions. I thrive in the intersection of pragmatism and technology.',
+  "When I'm not coding, you'll find me exploring new technologies, watching Anime, or gaming.",
+];
+
+const latestJob = experiences[0];
+const facts = [
+  { label: 'Experience', value: '6+ years', color: 'text-cyber-cyan' },
+  { label: 'Latest Role', value: `${latestJob.role} @ ${latestJob.company}`, color: 'text-cyber-pink' },
+  { label: 'Core Stack', value: 'React · TypeScript · Next.js', color: 'text-cyber-purple' },
+  { label: 'Status', value: 'Open to full-time roles · Available immediately', color: 'text-green-400', live: true },
+];
+
+export default function Hero() {
+  const [typedText, setTypedText] = useState('');
 
   useEffect(() => {
     setTypedText('');
@@ -74,7 +78,7 @@ export default function Hero() {
     }, 50);
 
     return () => clearInterval(typingInterval);
-  }, [fullText, language]);
+  }, []);
 
   return (
     <section
@@ -103,7 +107,7 @@ export default function Hero() {
               variants={fadeInUp}
               className="text-cyber-cyan font-mono text-sm md:text-base mb-4"
             >
-              {t('hero.greeting')}
+              {'// INITIALIZING DEVELOPER PROFILE...'}
             </motion.p>
 
             {/* Name with Glitch Effect */}
@@ -229,7 +233,7 @@ export default function Hero() {
 
               {/* ID Caption */}
               <p className="mt-6 text-center font-mono text-xs text-cyber-cyan/70 tracking-widest">
-                {t('hero.idLabel')}: {personalInfo.name}
+                {'// ID'}: {personalInfo.name}
               </p>
             </div>
           </motion.div>

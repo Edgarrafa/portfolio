@@ -5,16 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { navItems } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n/context';
-import LanguageToggle from './LanguageToggle';
-
-const navTranslationKeys: Record<string, string> = {
-  home: 'nav.home',
-  experience: 'nav.experience',
-  projects: 'nav.projects',
-  skills: 'nav.skills',
-  contact: 'nav.contact',
-};
 
 // Debounce utility
 function debounce<T extends (...args: Parameters<T>) => void>(
@@ -32,7 +22,6 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
   const sectionsRef = useRef(navItems.map((item) => item.href.replace('#', '')));
 
   const updateActiveSection = useCallback(() => {
@@ -116,9 +105,6 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-            {/* Language Toggle */}
-            <LanguageToggle />
-
             <ul className="flex items-center gap-8" role="list">
             {navItems.map((item, index) => {
               const isActive = activeSection === item.href.replace('#', '');
@@ -143,7 +129,7 @@ export default function Navigation() {
                     )}
                     aria-current={isActive ? 'page' : undefined}
                   >
-                    {t(navTranslationKeys[item.href.replace('#', '')])}
+                    {item.label}
                     {isActive && (
                       <motion.span
                         layoutId="activeSection"
@@ -159,11 +145,8 @@ export default function Navigation() {
             </ul>
           </nav>
 
-          {/* Mobile: Language Toggle + Menu Button */}
-          <div className="flex md:hidden items-center gap-3">
-            <LanguageToggle />
-
-            {/* Mobile Menu Button */}
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center">
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 text-cyber-cyan"
@@ -212,7 +195,7 @@ export default function Navigation() {
                         )}
                         aria-current={isActive ? 'page' : undefined}
                       >
-                        {t(navTranslationKeys[item.href.replace('#', '')])}
+                        {item.label}
                       </a>
                     </motion.li>
                   );

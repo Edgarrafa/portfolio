@@ -5,11 +5,8 @@ import { experiences } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import { fadeInUp, staggerContainer, timelineItemLeft, timelineItemRight } from '@/lib/animations';
 import { Briefcase } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n/context';
 
 export default function Experience() {
-  const { t, tArray } = useLanguage();
-
   return (
     <section id="experience" className="py-20 md:py-32 relative overflow-x-clip" aria-labelledby="experience-heading">
       {/* Section Header */}
@@ -22,10 +19,10 @@ export default function Experience() {
       >
         <motion.div variants={fadeInUp} className="text-center">
           <p className="text-cyber-cyan font-mono text-sm mb-2">
-            {t('experience.label')}
+            {'// CAREER.HISTORY'}
           </p>
           <h2 id="experience-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
-            {t('experience.title')}
+            Experience
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" aria-hidden="true" />
         </motion.div>
@@ -41,8 +38,6 @@ export default function Experience() {
           <div className="space-y-12 md:space-y-0">
             {experiences.map((exp, index) => {
               const isLeft = index % 2 === 0;
-              const translatedRole = t(`experience.jobs.${exp.id}.role`);
-              const translatedDescription = tArray(`experience.jobs.${exp.id}.description`);
 
               return (
                 <motion.div
@@ -80,7 +75,7 @@ export default function Experience() {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-xl md:text-2xl font-bold text-cyber-white mb-1">
-                          {translatedRole}
+                          {exp.role}
                         </h3>
                         <p className="text-cyber-cyan font-mono">{exp.company}</p>
                         <p className="text-cyber-gray text-sm mt-1">{exp.duration}</p>
@@ -89,7 +84,7 @@ export default function Experience() {
 
                     {/* Description */}
                     <ul className="space-y-2 mb-6" role="list">
-                      {translatedDescription.map((item, i) => (
+                      {exp.description.map((item, i) => (
                         <li
                           key={i}
                           className="flex items-start gap-2 text-cyber-gray text-sm"

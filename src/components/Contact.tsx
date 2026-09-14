@@ -6,7 +6,6 @@ import { personalInfo } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { Github, Linkedin, Twitter, Mail, Download, Copy, Check } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n/context';
 
 const socialIcons: Record<string, typeof Github> = {
   github: Github,
@@ -18,7 +17,6 @@ const secondaryLinkClass =
   'border-white/10 bg-transparent text-cyber-gray hover:text-cyber-white hover:border-cyber-cyan/40 hover:bg-white/5';
 
 export default function Contact() {
-  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -48,14 +46,14 @@ export default function Contact() {
         {/* Section Header */}
         <motion.div variants={fadeInUp} className="text-center mb-12">
           <p className="text-cyber-cyan font-mono text-sm mb-2">
-            {t('contact.label')}
+            {'// CONTACT.INIT'}
           </p>
           <h2 id="contact-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
-            {t('contact.title')}
+            {"Let's Talk"}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto mb-6" aria-hidden="true" />
           <p className="text-cyber-gray max-w-xl mx-auto">
-            {t('contact.subtitle')}
+            {"Looking for an engineer to join your team? Feel free to reach out. I'm always open to discussing new opportunities."}
           </p>
         </motion.div>
 
@@ -79,7 +77,7 @@ export default function Contact() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
               </span>
-              <span className="font-mono text-xs text-green-400">{t('contact.status')}</span>
+              <span className="font-mono text-xs text-green-400">Open to work</span>
             </div>
           </div>
 
@@ -96,16 +94,16 @@ export default function Contact() {
                 className="h-12 px-6 text-base font-bold bg-cyber-cyan text-cyber-black hover:bg-cyber-cyan hover:border-glow-cyan"
               >
                 <Mail size={18} aria-hidden="true" />
-                {t('contact.emailMe')}
+                Email me
               </Button>
               <Button
                 variant="outline"
                 onClick={copyEmail}
-                aria-label={t('contact.copy')}
+                aria-label="Copy email address"
                 className="h-12 px-6 text-base font-mono border-cyber-cyan/30 text-cyber-cyan hover:text-cyber-cyan hover:border-cyber-cyan hover:bg-cyber-cyan/10"
               >
                 {copied ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-                <span aria-live="polite">{copied ? t('contact.copied') : personalInfo.email}</span>
+                <span aria-live="polite">{copied ? 'Copied!' : personalInfo.email}</span>
               </Button>
             </div>
 
@@ -142,7 +140,7 @@ export default function Contact() {
                     className={secondaryLinkClass}
                   >
                     <Download size={16} aria-hidden="true" />
-                    {t('contact.resume')}
+                    Resume
                   </Button>
                 </li>
               )}

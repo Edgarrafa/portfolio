@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Inter } from 'next/font/google';
-import { LanguageProvider } from '@/lib/i18n/context';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -72,9 +71,7 @@ export default function RootLayout({
         <div className="noise-overlay" aria-hidden="true" />
 
         {/* Main Content */}
-        <LanguageProvider>
-          <main id="main-content">{children}</main>
-        </LanguageProvider>
+        <main id="main-content">{children}</main>
 
         {/* SVG Filters for Chromatic Aberration */}
         <svg className="hidden" aria-hidden="true">

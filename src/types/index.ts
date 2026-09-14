@@ -14,6 +14,8 @@ export interface SocialLink {
 export interface Experience {
   id: string;
   company: string;
+  role: string;
+  description: string[];
   duration: string;
   technologies: string[];
   logo?: string;
@@ -21,6 +23,8 @@ export interface Experience {
 
 export interface Project {
   id: string;
+  title: string;
+  description: string;
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
@@ -36,4 +40,5 @@ export type SkillCategory = 'frontend' | 'backend' | 'tools' | 'other';
 
 export interface NavItem {
   href: string;
+  label: string;
 }

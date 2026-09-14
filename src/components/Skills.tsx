@@ -5,13 +5,12 @@ import { motion } from 'framer-motion';
 import { skills } from '@/lib/data';
 import { fadeInUp, staggerContainer, staggerContainerFast } from '@/lib/animations';
 import type { SkillCategory } from '@/types';
-import { useLanguage } from '@/lib/i18n/context';
 
-const categoryKeys: Record<SkillCategory, string> = {
-  frontend: 'skills.categories.frontend',
-  backend: 'skills.categories.backend',
-  tools: 'skills.categories.tools',
-  other: 'skills.categories.other',
+const categoryLabels: Record<SkillCategory, string> = {
+  frontend: 'Frontend',
+  backend: 'Backend',
+  tools: 'Tools & DevOps',
+  other: 'Other',
 };
 
 // Static class mappings to prevent Tailwind purging
@@ -48,8 +47,7 @@ const categoryStyles: Record<SkillCategory, {
 };
 
 export default function Skills() {
-  const { t } = useLanguage();
-  const categories = useMemo(() => Object.keys(categoryKeys) as SkillCategory[], []);
+  const categories = useMemo(() => Object.keys(categoryLabels) as SkillCategory[], []);
 
   // Memoize skills filtering per category
   const skillsByCategory = useMemo(() => {
@@ -71,10 +69,10 @@ export default function Skills() {
       >
         <motion.div variants={fadeInUp} className="text-center">
           <p className="text-cyber-cyan font-mono text-sm mb-2">
-            {t('skills.label')}
+            {'// TECH.STACK'}
           </p>
           <h2 id="skills-heading" className="text-3xl md:text-5xl font-bold font-mono text-cyber-white mb-4">
-            {t('skills.title')}
+            Skills & Technologies
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink mx-auto" aria-hidden="true" />
         </motion.div>
@@ -109,7 +107,7 @@ export default function Skills() {
                     aria-hidden="true"
                   />
                   <h3 id={`${category}-heading`} className="text-xl md:text-2xl font-bold font-mono text-cyber-white">
-                    {t(categoryKeys[category])}
+                    {categoryLabels[category]}
                   </h3>
                   <div className={`flex-1 h-px bg-gradient-to-r ${styles.lineClass}`} aria-hidden="true" />
                 </motion.div>
@@ -119,7 +117,7 @@ export default function Skills() {
                   variants={staggerContainerFast}
                   className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
                   role="list"
-                  aria-label={t(categoryKeys[category])}
+                  aria-label={categoryLabels[category]}
                 >
                   {categorySkills.map((skill) => (
                     <motion.li
