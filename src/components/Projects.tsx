@@ -5,7 +5,7 @@ import { projects } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
-import { ExternalLink, Github, Star } from 'lucide-react';
+import { ExternalLink, Folder, Github, Star } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/context';
 
 export default function Projects() {
@@ -166,20 +166,7 @@ export default function Projects() {
                 <div className="glass cyber-clip h-full p-5">
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-2 rounded-lg bg-cyber-purple/10 border border-cyber-purple/30" aria-hidden="true">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-6 h-6 text-cyber-purple"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
-                        />
-                      </svg>
+                      <Folder className="w-6 h-6 text-cyber-purple" strokeWidth={1.5} />
                     </div>
                     <div className="flex items-center gap-2">
                       {project.githubUrl && (
