@@ -107,12 +107,13 @@
   },
   "contact": {
     "label": "// CONTACT.INIT",
-    "title": "Get In Touch",
+    "title": "Let's Talk",
     "subtitle": "Looking for an engineer to join your team? Feel free to reach out. I'm always open to discussing new opportunities.",
-    "connect": "Connect",
-    "downloadResume": "Download Resume",
-    "available": "Available for Opportunities",
-    "availableText": "Open to full-time Software Engineer roles."
+    "status": "Open to work",
+    "emailMe": "Email me",
+    "copy": "Copy email address",
+    "copied": "Copied!",
+    "resume": "Resume"
   },
   "footer": {
     "designedWith": "Designed & Built with",

@@ -107,12 +107,13 @@
   },
   "contact": {
     "label": "// CONTACTO.INIT",
-    "title": "Contacto",
+    "title": "Hablemos",
     "subtitle": "¿Buscas un ingeniero para unirse a tu equipo? No dudes en contactarme. Siempre estoy abierto a discutir nuevas oportunidades.",
-    "connect": "Conectar",
-    "downloadResume": "Descargar CV",
-    "available": "Disponible para Oportunidades",
-    "availableText": "Abierto a puestos de Ingeniero de Software de tiempo completo."
+    "status": "Disponible",
+    "emailMe": "Escríbeme",
+    "copy": "Copiar correo",
+    "copied": "¡Copiado!",
+    "resume": "CV"
   },
   "footer": {
     "designedWith": "Diseñado y Construido con",
