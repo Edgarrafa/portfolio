@@ -11,7 +11,7 @@ export default function Experience() {
   const { t, tArray } = useLanguage();
 
   return (
-    <section id="experience" className="py-20 md:py-32 relative" aria-labelledby="experience-heading">
+    <section id="experience" className="py-20 md:py-32 relative overflow-x-clip" aria-labelledby="experience-heading">
       {/* Section Header */}
       <motion.div
         initial="initial"

@@ -30,6 +30,13 @@
     @apply border-border;
   }
 
+  /* Clip sideways overflow (e.g. slide-in animations) so the mobile
+     viewport never grows wider than the screen and breaks the fixed navbar */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   html {
     scroll-behavior: smooth;
   }

@@ -62,11 +62,27 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [updateActiveSection]);
 
+  const pendingScrollRef = useRef<string | null>(null);
+
+  const scrollToSection = (href: string) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    // Closing the mobile menu cancels an in-progress smooth scroll,
+    // so defer the scroll until the menu's exit animation completes.
+    if (isMobileMenuOpen) {
+      pendingScrollRef.current = href;
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    scrollToSection(href);
+  };
+
+  const handleMenuExitComplete = () => {
+    if (pendingScrollRef.current) {
+      scrollToSection(pendingScrollRef.current);
+      pendingScrollRef.current = null;
     }
   };
 
@@ -77,7 +93,8 @@ export default function Navigation() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'glass-strong py-3' : 'py-5 bg-transparent'
+        isScrolled ? 'py-3' : 'py-5',
+        isScrolled || isMobileMenuOpen ? 'glass-strong' : 'bg-transparent'
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -92,8 +109,9 @@ export default function Navigation() {
             className="text-xl font-bold font-mono text-cyber-cyan hover:text-glow-cyan transition-all"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            aria-label="Edgar G. Logo, click to scroll to top"
           >
-            {'<CD />'}
+            {'<EDGAR G />'}
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -160,7 +178,7 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={handleMenuExitComplete}>
           {isMobileMenuOpen && (
             <motion.nav
               initial={{ opacity: 0, height: 0 }}
